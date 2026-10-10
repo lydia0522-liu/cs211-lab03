@@ -28,9 +28,22 @@ using namespace std;
  */
 bool input_positions(string filename, vector<Position>& positions)
 {
-  //
-  // TODO:
-  //
+  ifstream file;
+  file.open(filename);
+  if (file.fail())
+  {
+    return false;
+  }
+  double latitude;
+  double longitude;
+  string identifier;
+  string category;
+
+  while (file >> latitude >> longitude >> identifier >> category)
+  {
+    Position pos(latitude, longitude, identifier, category);
+    positions.push_back(pos);
+  }
   return true;
 }
 
@@ -57,9 +70,10 @@ void sort_positions(vector<Position>& positions)
  */
 void output_positions(const vector<Position>& positions)
 {
-  //
-  // TODO:
-  //
+  for (const Position& pos :positions)
+  {
+    pos.print();
+  }
 }
 
 
