@@ -56,9 +56,11 @@ bool input_positions(string filename, vector<Position>& positions)
  */
 void sort_positions(vector<Position>& positions)
 {
-  //
-  // TODO:
-  //
+  sort (positions.begin(), positions.end(),
+  [] (const Position& p1, const Position& p2)
+  {
+    return p1.getIdentifier() < p2.getIdentifier();
+  });
 }
 
 
@@ -88,10 +90,11 @@ vector<Position>::const_iterator search(const vector<Position>& positions, strin
 {
   vector<Position>::const_iterator iter;
 
-  //
-  // TODO:
-  //
-  iter = positions.end();
+  iter = find_if (positions.begin(), positions.end(),
+  [identifier](const Position& pos)
+  {
+    return toLower(pos.getIdentifier()) == toLower(identifier);
+  });
   return iter;
 }
 
@@ -105,9 +108,13 @@ vector<Position>::const_iterator search(const vector<Position>& positions, strin
  */
 void find_position(const vector<Position>& positions, string identifier)
 {
-  //
-  // TODO:
-  //
+  vector<Position>::const_iterator iter = search(positions, identifier);
+  if (iter != positions.end())
+  {
+    iter->print();
+  }else{
+    cout << "not found" << endl;
+  }
 }
 
 
@@ -120,9 +127,13 @@ void find_position(const vector<Position>& positions, string identifier)
  */
 void remove_position(vector<Position>& positions, string identifier)
 {
-  //
-  // TODO:
-  //
+   vector<Position>::const_iterator iter = search(positions, identifier);
+  if (iter != positions.end())
+  {
+    positions.erase(iter);
+  }else{
+    cout << "not found" << endl;
+  }
 }
 
 
