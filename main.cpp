@@ -146,9 +146,33 @@ void remove_position(vector<Position>& positions, string identifier)
  */
 void closest_food(const vector<Position>& positions, string identifier)
 {
-  //
-  // TODO:
-  //
+  vector<Position>::const_iterator iter = search(positions, identifier);
+  if (iter == positions.end() )
+  {
+    cout << "not found" << endl;
+    return;
+  }
+
+  vector<pair<Position, double>> food_positions;
+  for (const Position& pos : positions)
+  {
+    if (pos.getCategory() == "food")
+    {
+      double distance = iter->distance(pos);
+      food_positions.push_back(make_pair(pos, distance));
+    }
+  }
+
+  sort(food_positions.begin(), food_positions.end(),
+  [] (const pair<Position, double>& p1, const pair<Position, double>& p2)
+  {
+    return p1.second < p2.second;
+  });
+
+  for (const pair<Position, double>& food : food_positions)
+  {
+    cout << food.first.getIdentifier() << ": " << food.second << endl;
+  }
 }
 
 
